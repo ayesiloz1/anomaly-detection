@@ -1,37 +1,44 @@
 Anomaly Detection Using Convolutional Autoencoder (CAE)
-This project is a Python package for anomaly detection using a Convolutional Autoencoder (CAE). It includes modules for image processing, dataset loading, custom data loading, and the CAE model, with a structure that supports flexibility and extensibility.
+This project is a Python package for anomaly detection using a Convolutional Autoencoder (CAE). It includes modules for image processing, dataset loading, custom data loading, and the CAE model, designed to be flexible and extensible for various deep learning applications.
 
---Project Structure
-~ data/ - Data handling (dataset templates, custom dataloaders, image utilities).
-~ models/ - Model definitions, including CAE.
-~ options/ - Command-line configuration for training/testing.
-~ utils/ - Utility functions for directories.
-~ train.py - Training script.
-~ test.py - Testing script.
+Project Structure
+data/ - Handles data-related tasks, including dataset templates, custom dataloaders, and image utilities.
+models/ - Contains model definitions, including the CAE model for anomaly detection.
+options/ - Command-line configurations for training and testing.
+utils/ - Utility functions for directory management.
+train.py - Script to train the CAE model.
+test.py - Script to test the CAE model.
+Dataset
+The dataset is located in the team drive. To use it, simply add it to the anomaly-detection directory after cloning the repository.
 
---Dataset is in team drive
-You can simply add it to anomaly-detection directory
+Installation
+Prerequisites
 Conda (for managing environments)
+Setup
+Clone the repository:
 
+bash
+Copy code
 git clone https://github.com/your-username/anomaly-detection.git
 cd anomaly-detection
+Create and activate the environment:
 
-Create the environment:
-
+bash
+Copy code
 conda env create -f environment.yml
 conda activate anomaly-detection
-
 Visualizer Tool
-The visualizer.py provides a GUI for displaying images and anomaly results with controls for thresholds and views.
+The project includes a visualizer.py tool that provides a GUI for viewing images and anomaly detection results, with interactive controls for thresholds and display options.
 
-~ ~ Running the Visualizer
+Running the Visualizer
+To launch the visualizer, use:
 
+bash
+Copy code
 python -m visualizer.main
-
 License
-This project is licensed under the MIT License. See LICENSE for details.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 Credits
-This project was inspired by and adapted from the work done by CY-Jeong on their anomaly-detection-mvtec repository. ```
+This project was inspired by and adapted from the work by CY-Jeong in their anomaly-detection-mvtec repository.
 
-https://github.com/CY-Jeong/anomaly-detection-mvtec/tree/master
