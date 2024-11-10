@@ -25,7 +25,7 @@ The dataset is located in the team drive. To use it, simply add it to the anomal
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/anomaly-detection.git
+    git clone https://github.com/ayesiloz1/anomaly-detection.git
     cd anomaly-detection
     ```
 
