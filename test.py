@@ -33,5 +33,5 @@ if __name__ == "__main__":
 
         epoch_time = time.time() - epoch_start_time
         print(f"{i} epoch_time : {epoch_time:.3f}")
-        model.save_images(data)
+        model.save_images(data,epoch=0)
     print("end Test")

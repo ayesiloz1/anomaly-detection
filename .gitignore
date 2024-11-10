@@ -1,1 +1,38 @@
-/temp
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore environment files
+.env
+*.env
+
+# Ignore compiled or package files
+*.egg-info/
+*.eggs/
+*.whl
+*.wheel
+*.manifest
+
+# Ignore data directories and results (optional if you don't want to track them)
+data/
+train_results/
+test_results/
+
+# Ignore log and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore IDE settings
+.idea/
+.vscode/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+utils/__pycache__

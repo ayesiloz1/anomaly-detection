@@ -16,7 +16,7 @@ def is_imgfile(filename):
 def get_datapaths(train_dir):
     """To create dataset, we need to save paths of images"""
     image_paths = []
-    assert os.path.isdir(train_dir), f"{train_dir} is not existed"
+    assert os.path.isdir(train_dir), f"{train_dir} does not exist"
 
     for root, _, names in os.walk(train_dir):
         for name in names:
@@ -25,23 +25,38 @@ def get_datapaths(train_dir):
                 image_paths.append(path)
     return image_paths
 
-def get_transform(opt):
-    """Transforms images"""
-    transform = []
-    if opt.rotate == True:
-        transform.append(transforms.RandomRotation(0.5))
-    transform.append(transforms.ColorJitter(brightness=opt.brightness))
-    transform.append(transforms.Resize((opt.cropsize, opt.cropsize), interpolation=2))
-    transform.append(transforms.ToTensor())
-    if opt.channels == 3:
-        transform.append(transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)))
-    elif opt.channels == 1:
-        transform.append(transforms.Normalize((0.5), (0.5)))
 
+def get_transform(opt):
+    """Transforms images to grayscale if opt.channels == 1."""
+    transform = []
+    
+    if opt.rotate:
+        transform.append(transforms.RandomRotation(0.5))
+    
+    transform.append(transforms.ColorJitter(brightness=opt.brightness))
+    
+    # Resize image to the desired size
+    transform.append(transforms.Resize((opt.cropsize, opt.cropsize), interpolation=2))
+    
+    # Convert image to grayscale if opt.channels == 1
+    if opt.channels == 1:
+        transform.append(transforms.Grayscale(num_output_channels=1))  # Convert RGB to grayscale
+    
+    transform.append(transforms.ToTensor())
+    
+    # Normalize the grayscale image (1 channel) or RGB image (3 channels)
+    if opt.channels == 1:
+        transform.append(transforms.Normalize((0.5,), (0.5,)))  # For grayscale
+    else:
+        transform.append(transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)))  # For RGB
+
+    
     return transforms.Compose(transform)
 
+
+
 class ImageFolder(data.Dataset):
-    """ImageFolder functions for dataset"""
+    """Custom ImageFolder dataset for loading images"""
 
     def __init__(self, root, transform=None, return_paths=False):
         imgs = get_datapaths(root)
@@ -56,14 +71,21 @@ class ImageFolder(data.Dataset):
 
     def __getitem__(self, index):
         path = self.imgs[index]
-        img = Image.open(path).convert('RGB')
+        
+        # Convert image to grayscale if opt.channels == 1
+        if self.transform is not None and hasattr(self.transform, 'opt') and self.transform.opt.channels == 1:
+            img = Image.open(path).convert('L')  # 'L' mode for grayscale
+        else:
+            img = Image.open(path).convert('RGB')  # Convert image to RGB if not grayscale
+        
         if self.transform is not None:
             img = self.transform(img)
+        
         if self.return_paths:
             return img, path
         else:
             return img
-
+            
     def __len__(self):
         return len(self.imgs)
 
